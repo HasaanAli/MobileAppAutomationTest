@@ -59,8 +59,11 @@ jobs:
           name: Run UI Tests with Firebase Test Lab
           command: >
             sudo gcloud firebase test android run
+              --type instrumentation
               --app ${APK_PATH}
               --test ${TEST_APK_PATH}
+              --device model=Nexus6P,version=28,locale=en,orientation=portrait 
+              --timeout 30m
               --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
           no_output_timeout: 30m
       # --app <local_server_path>/<app_apk>.apk
