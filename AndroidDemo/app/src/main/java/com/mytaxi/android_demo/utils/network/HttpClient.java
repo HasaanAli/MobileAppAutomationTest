@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import androidx.test.espresso.idling.CountingIdlingResource;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -34,6 +35,8 @@ public class HttpClient {
     private final OkHttpClient mClient;
     private final JsonParser mJsonParser;
 
+    private static final CountingIdlingResource mIdlingRes = new CountingIdlingResource("EspressoSync");
+
     public HttpClient() {
         mClient = new OkHttpClient.Builder().readTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS).build();
         mJsonParser = new JsonParser();
@@ -44,10 +47,12 @@ public class HttpClient {
         String seed = "23f8827e04239990";
         String url = RANDOM_USER_URL + "?results=" + amount + "&seed=" + seed;
         Request request = new Request.Builder().url(url).build();
+        mIdlingRes.increment();
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                mIdlingRes.decrement();
             }
 
             @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -60,6 +65,7 @@ public class HttpClient {
                     driverCallback.setDrivers(drivers);
                     driverCallback.run();
                 }
+                mIdlingRes.decrement();
             }
         });
     }
@@ -67,10 +73,12 @@ public class HttpClient {
     public void fetchUser(String seed, final UserCallback userCallback) {
         String url = RANDOM_USER_URL + "?seed=" + seed;
         Request request = new Request.Builder().url(url).build();
+        mIdlingRes.increment();
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                mIdlingRes.decrement();
             }
 
             @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -81,6 +89,7 @@ public class HttpClient {
                     userCallback.setUser(getUser(responseBody.string()));
                     userCallback.run();
                 }
+                mIdlingRes.decrement();
             }
         });
     }
@@ -146,6 +155,10 @@ public class HttpClient {
             mUser = user;
         }
 
+    }
+
+    public static CountingIdlingResource getIdlingResource() {
+        return mIdlingRes;
     }
 
 }
