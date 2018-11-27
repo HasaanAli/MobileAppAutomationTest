@@ -57,7 +57,7 @@ jobs:
             echo 'export TEST_APK_PATH=`find "." "-path" "*Test*.apk" -print -quit`' >> $BASH_ENV
       - run:
           name: Run UI Tests with Firebase Test Lab
-          command: sudo gcloud firebase test android run --type instrumentation --app ${APK_PATH} --test ${TEST_APK_PATH} --device model=sailfish,version=28,locale=en,orientation=portrait --timeout 30m #--results-bucket cloud-test-${GOOGLE_PROJECT_ID}
+          command: sudo gcloud firebase test android run --type instrumentation --app ${APK_PATH} --test ${TEST_APK_PATH} --device model=walleye,version=28,locale=en,orientation=portrait --timeout 30m #--results-bucket cloud-test-${GOOGLE_PROJECT_ID}
           no_output_timeout: 30m
       # CircleCI Firebase tutorial suggested creating results bucket & 
       # copy the results to circle ci space. But creating results bucket needs 
