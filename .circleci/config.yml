@@ -5,13 +5,14 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/MobileAppAutomationTest
+    working_directory: ~/MobileAppAutomationTest/AndroidDemo
     docker:
       - image: circleci/android:api-28-alpha  # gcloud is baked into this image
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+          path: ~/MobileAppAutomationTest
       - run:
           name: CD into AndroidDemo
           command: cd AndroidDemo
