@@ -2,6 +2,7 @@ package com.mytaxi.android_demo.tests
 
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.rule.ActivityTestRule
+import androidx.test.rule.GrantPermissionRule
 import androidx.test.runner.AndroidJUnit4
 import com.mytaxi.android_demo.activities.MainActivity
 import com.mytaxi.android_demo.poms.DriverProfileScreen
@@ -21,6 +22,9 @@ class EspressoTests : Tests() {
     val loginScreen = LoginScreen()
     val mainScreen = MainScreen()
     val driverProfileScreen = DriverProfileScreen()
+
+    @get:Rule
+    val locationPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
 
     @get:Rule // launch main activity after clearing app data
     var activityTestRule: ActivityTestRule<*> = ActivityTestRule(MainActivity::class.java, false, false)
