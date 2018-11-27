@@ -40,6 +40,44 @@ class EspressoTests : Tests() {
         activityTestRule.launchActivity(null)
     }
 
+    /**
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *                                          NOTES:
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *          What possible scenarios should be tested if the app has various kinds of users?
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     * Suppose we have two user roles: passenger and driver. Suppose we have separate apps for both
+     * types of users but our backend/apis are common.
+     * Then we should test these scenarios targeting our Drivers(this mytaxi app):
+     *      Login with incorrect credentials -> Login failed should appear
+     *      Login with driver credentials -> Either 'Login failed' or 'Use Drivers app' should appear
+     *      Login with passenger credentials -> Main screen should appear indicating login success
+     *
+     * Vice versa cases if testing on Passenger's app
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     *                                  UX issues in this demo app
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *
+     * SHOW NETWORK PROGRESS:
+     * During network requests like on login (fetchUser) and drivers search (fetchDrivers),
+     * some progress bar view should appear.
+     *
+     * REPLACE SNACK BAR ON LOGIN SCREEN:
+     * More importantly, WE SHOULD REPLACE SNACK BAR on login screen. Because if soft keyboard is open,
+     * the snack bar hides below it and isn't visible to user. So login attempts with wrong creds
+     * wouldn't show any error to user while soft keyboard is open.
+     *
+     * On login click, we can programmatically close the soft keyboard.
+     *
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     */
+
     // We use page object model classes.
     // It provides separation between tests and espresso by moving all espresso specific code
     // to our custom framework.
