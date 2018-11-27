@@ -12,6 +12,8 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/repository/AndroidDemo
       - run:
           name: list all
           command: ls -a
