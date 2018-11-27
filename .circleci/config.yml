@@ -5,13 +5,16 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/code/AndroidDemo
+    working_directory: ~/MobileAppAutomationTest
     docker:
       - image: circleci/android:api-28-alpha  # gcloud is baked into this image
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - run:
+          name: CD into AndroidDemo
+          command: cd AndroidDemo
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 #      - run:
