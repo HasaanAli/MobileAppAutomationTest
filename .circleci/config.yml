@@ -5,15 +5,14 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/repository
+    working_directory: ~/repository/AndroidDemo
     docker:
       - image: circleci/android:api-28-alpha  # gcloud is baked into this image
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
-      - checkout
-      - attach_workspace:
-          at: ~/repository/AndroidDemo
+      - checkout:
+          path: ~/repository
       - run:
           name: list all
           command: ls -a
